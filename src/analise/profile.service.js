@@ -11,7 +11,7 @@ export function saveNewProfile(createDto) {
         'Access-Control-Allow-Origin':LOCALHOST_CORS,
         'Content-Type': 'application/json;charset=utf-8'
       },
-      body: createDto 
+      body:  JSON.stringify(createDto) 
     })
       .then(checkStatus)
       .then(parseJSON)

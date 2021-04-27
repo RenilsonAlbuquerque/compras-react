@@ -123,7 +123,7 @@ export function BuysDashboard(){
                    
 
                     {places? (places.map((row:any) => (
-                      <option value={row.id}>{row.nome}</option>
+                      <option key={row.id} value={row.id}>{row.nome}</option>
                       )))
                       : <></>}
                   </Select>
@@ -143,7 +143,7 @@ export function BuysDashboard(){
                    
 
                     {profiles? (profiles.map((row:any) => (
-                      <option value={row.id}>{row.nome}</option>
+                      <option  key={row.id} value={row.id}>{row.nome}</option>
                       )))
                       : <></>}
                   </Select>

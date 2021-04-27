@@ -7,20 +7,35 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { saveNewProfile } from '../../analise/profile.service';
+import { User } from '../../dto/auth/user';
+import { ProfileCreateDto} from '../../dto/profile/profile.create'
 
 const CadastrarPerfil = ({users,handleCloseAction}:any) => {
-    
+    const [nomePerfil,setNomePerfil] = React.useState("");
+    const [participantes,setParticipantes] = React.useState([] as any[]);
     const handleClose = () => {
         handleCloseAction();
     };
     const handleSave = () => {
-      // saveNewProfile().then(result => {
-      //   handleCloseAction();
-      // })
+      console.log(nomePerfil)
+      console.log(listUsersId(participantes));
+      let profileCreateDto = {
+        id:0,
+        nome: nomePerfil,
+        people: listUsersId(participantes)
+      } as ProfileCreateDto;
+      saveNewProfile(profileCreateDto).then(result => {
+        console.log(result)
+         handleCloseAction();
+      })
     }
-    const defaultUsers = [
-      { id: 99, nome:'Josivaldo' }
-    ];
+    const listUsersId = (participantes:any) => {
+      let result:number[] = [];
+      participantes.forEach((participante:any) =>{
+        result.push(participante.id) 
+      })
+      return result;
+    }
   
     let peopleChips = (
       <Autocomplete
@@ -29,8 +44,9 @@ const CadastrarPerfil = ({users,handleCloseAction}:any) => {
         id="tags-outlined"
         options={users}
         getOptionLabel={(option) => option.nome}
-        defaultValue={[defaultUsers[0]]}
+        defaultValue={[users[0]]}
         filterSelectedOptions
+        onChange={(event, value) => setParticipantes(value)} 
         renderInput={(params) => (
           <TextField
             {...params}
@@ -59,6 +75,8 @@ const CadastrarPerfil = ({users,handleCloseAction}:any) => {
               label="Nome do perfil"
               type="text"
               fullWidth
+              value={nomePerfil}
+              onChange={(e) => setNomePerfil(e.target.value)}
             />
             {peopleChips}
           </DialogContent>

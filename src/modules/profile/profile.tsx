@@ -6,6 +6,7 @@ import CadastrarPerfil from './cadastrar.perfil';
 import ListarPerfis from './lista.perfil';
 import { listAllUsers } from '../../analise/user.service';
 import { listAllProfiles } from '../../analise/profile.service';
+import { getLoggedUser } from '../../infra/auth';
 
 const useStyles = makeStyles((theme) => ({
     
@@ -33,13 +34,15 @@ export function Profile() {
     const [users,setUsers] = React.useState([]);
     const [profiles,setProfiles] = React.useState([]);
     useEffect(() => {
+      console.log("só uma vezsinha")
         listAllUsers().then(result => {
             setUsers(result);
         })
-        listAllProfiles().then(result => {
+        listAllProfiles(getLoggedUser().id).then(result => {
+          console.log(result)
             setProfiles(result)
         })
-    });
+    },[]);
   
     const handleClickOpen = () => {
       setOpen(true);

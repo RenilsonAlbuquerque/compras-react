@@ -13,7 +13,7 @@ const listarPerfis = ({perfis}:any) => {
     return (
         <List>
             {perfis? (perfis.map((value:any) => (
-                <ListItem button>
+                <ListItem key={value.id} button>
                     <ListItemText primary={value.nome} />
                 </ListItem>
             ))  ): <></>}
