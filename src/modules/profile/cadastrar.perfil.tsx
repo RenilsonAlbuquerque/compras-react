@@ -7,27 +7,37 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { saveNewProfile } from '../../analise/profile.service';
-import { User } from '../../dto/auth/user';
 import { ProfileCreateDto} from '../../dto/profile/profile.create'
+import { Alert } from '@material-ui/lab';
+import { IdNomeDto } from '../../dto/comons/IdNome';
 
 const CadastrarPerfil = ({users,handleCloseAction}:any) => {
     const [nomePerfil,setNomePerfil] = React.useState("");
-    const [participantes,setParticipantes] = React.useState([] as any[]);
+    const [participantes,setParticipantes] = React.useState([] as IdNomeDto[]);
+    const [showError,setShowError] = React.useState(false);
+
     const handleClose = () => {
         handleCloseAction();
     };
     const handleSave = () => {
-      console.log(nomePerfil)
-      console.log(listUsersId(participantes));
-      let profileCreateDto = {
-        id:0,
-        nome: nomePerfil,
-        people: listUsersId(participantes)
-      } as ProfileCreateDto;
-      saveNewProfile(profileCreateDto).then(result => {
-        console.log(result)
-         handleCloseAction();
-      })
+      if(nomePerfil.length > 0 && participantes.length > 0){
+        console.log(nomePerfil)
+      
+        console.log(listUsersId(participantes));
+        let profileCreateDto = {
+          id:0,
+          nome: nomePerfil,
+          people: listUsersId(participantes)
+        } as ProfileCreateDto;
+      
+        saveNewProfile(profileCreateDto).then(result => {
+          console.log(result)
+          handleCloseAction();
+        })
+      }else{
+        setShowError(true)
+      }
+      
     }
     const listUsersId = (participantes:any) => {
       let result:number[] = [];
@@ -36,7 +46,11 @@ const CadastrarPerfil = ({users,handleCloseAction}:any) => {
       })
       return result;
     }
-  
+    const blankValue:IdNomeDto[] = [
+      {id:-1,nome:'none'}
+    ] as IdNomeDto[]
+    const defaultOption = (users.lenght > 0) ? users[0] as IdNomeDto : blankValue[0] as IdNomeDto
+    
     let peopleChips = (
       <Autocomplete
         style={{paddingTop:'12px'}}
@@ -44,7 +58,7 @@ const CadastrarPerfil = ({users,handleCloseAction}:any) => {
         id="tags-outlined"
         options={users}
         getOptionLabel={(option) => option.nome}
-        defaultValue={[users[0]]}
+        defaultValue={[defaultOption]}
         filterSelectedOptions
         onChange={(event, value) => setParticipantes(value)} 
         renderInput={(params) => (
@@ -65,6 +79,7 @@ const CadastrarPerfil = ({users,handleCloseAction}:any) => {
         
           <DialogTitle id="form-dialog-title">Criar novo perfil</DialogTitle>
           <DialogContent>
+           {showError? <Alert variant="filled"  severity="error">Nome inválido ou quantidade de participantes insuficiente</Alert> :<></>} 
             <DialogContentText>
               Crie o perfil e adicione pessoas. O nome do perfil deve ser preferencialmente algo que relacione as compras entre si.
             </DialogContentText>
