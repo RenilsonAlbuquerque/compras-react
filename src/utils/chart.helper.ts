@@ -8,6 +8,8 @@ export function mapApiResultToMonthChart(apiChartList:ChartList[]):ChartListExhi
     for(let concreteDay = 1; concreteDay< 32;concreteDay++){
         let amoutFound = null;
         for(let apiDay = 0; apiDay< apiChartList.length;apiDay++){
+            
+            //console.log(new Date(apiChartList[apiDay].dateTime).getDate() + " " + apiChartList[apiDay].dateTime)
             if(concreteDay === new Date(apiChartList[apiDay].dateTime).getDate()){
                 amoutFound = apiChartList[apiDay].amount;
             }
