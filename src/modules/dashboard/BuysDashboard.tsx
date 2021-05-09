@@ -90,7 +90,7 @@ export function BuysDashboard(){
         <Container maxWidth="lg" className={classes.container}>
           <Paper style={{padding:'12px', marginBottom:'12px'}}> 
             <div className="row">
-              <div className="col">
+              <div className="col-sm-12 col-lg-4">
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <KeyboardDatePicker
                     style={{width:'100%'}}
@@ -108,7 +108,7 @@ export function BuysDashboard(){
     
                   </MuiPickersUtilsProvider>
               </div>
-              <div className="col">
+              <div className="col-sm-12 col-lg-4">
                 <InputLabel htmlFor="age-native-simple">Mercado</InputLabel>
                 <Select
                     style={{width:'100%'}}
@@ -128,7 +128,7 @@ export function BuysDashboard(){
                       : <></>}
                   </Select>
               </div>
-              <div className="col">
+              <div className="col-sm-12 col-lg-4">
                 <InputLabel htmlFor="age-native-simple">Perfil</InputLabel>
                 <Select
                     style={{width:'100%'}}
