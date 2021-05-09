@@ -75,13 +75,12 @@ export function BuysDashboard(){
   };
   //======================Call only once==================///
   useEffect(() => {
-    console.log("should be call once")
+  
     listAllPlaces().then((result:any) => {
       //console.log(result)
       setPlaces(result);
     })
     listAllProfiles(getLoggedUser().id).then((result:any) => {
-      console.log(result)
       setProfiles(result);
     })
   },[]);
@@ -150,7 +149,7 @@ export function BuysDashboard(){
               </div>
         
             </div>
-            <div style={{display:'flex',alignSelf:'center'}}>
+            <div style={{display:'flex',alignSelf:'center', padding:'0.5em'}}>
               <Button variant="contained" color="primary" onClick={() => handleSearchChange(selectedDate.getMonth() +1)}>
                 Pesquisar
               </Button>

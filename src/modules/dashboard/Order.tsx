@@ -11,6 +11,8 @@ import Modal from '@material-ui/core/Modal';
 import BuyDetail from '../Buy/ByuDetails';
 import { getNfceOvreviewById } from '../../analise/nfce.service';
 import { NfceOverviewDto } from '../../dto/buy/nfce.overview.dto';
+import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import DialogTitle from '../commons/modal/DialogTitle';
 
 // Generate Order Data
 function createData(id:any, date:any, name:any, shipTo:any, paymentMethod:any, amount:any) {
@@ -37,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
       overflow:"auto",
   },
   paper: {
-    width: '70vw',
+    width: '100vw',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
@@ -50,6 +52,7 @@ const Buys = ({props}:any) =>  {
   const [currentNfce, setCurrentNfce] = React.useState({} as NfceOverviewDto)
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [currentNfceTitle,setCurrentNfceTitle] = React.useState("");
   
   const handleOpen = () => {
     setOpen(true);
@@ -60,10 +63,11 @@ const Buys = ({props}:any) =>  {
   };
   let handleSearchBuyDetails = (nfceId:number) => {
     getNfceOvreviewById(nfceId).then((result:any) => {
-      //console.log(result)
       setCurrentNfce(result);
+      const buyData = new Date(result.nfceDate);
+      const title = `Compras do dia ${buyData.getDay()}/${buyData.getMonth() + 1}/${buyData.getFullYear()}`
+      setCurrentNfceTitle(title);
       handleOpen()
-      //setChartData(result);
     });
   }
   return (
@@ -80,7 +84,7 @@ const Buys = ({props}:any) =>  {
         </TableHead>
         <TableBody>
           {props? (props.map((row:any) => (
-            <TableRow key={row.idCompra} onClick={() => handleSearchBuyDetails(row.idCompra)}>
+            <TableRow style={{cursor:"pointer"}} key={row.idCompra} onClick={() => handleSearchBuyDetails(row.idCompra)}>
               <TableCell>{row.data}</TableCell>
               <TableCell>{row.total}</TableCell>
               <TableCell>{row.icms}</TableCell>
@@ -94,18 +98,18 @@ const Buys = ({props}:any) =>  {
           See more orders
         </Link>
       </div> */}
-
-      <Modal className={classes.modal}
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-      >
-        <div className={classes.paper}>
+      <Dialog onClose={handleClose} open={open} fullWidth={true}>
+        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+          {currentNfceTitle}
+        </DialogTitle>
+        <DialogContent>
           <BuyDetail props={currentNfce}></BuyDetail>
-        </div>
-        
-      </Modal>
+        </DialogContent>
+        <DialogActions>
+          <h4>Total: R$ {currentNfce.total}</h4>
+        </DialogActions>
+      </Dialog>
+    
     </React.Fragment>
   );
 }
