@@ -6,7 +6,7 @@ export function listAllUsers() {
       accept: "application/json",
       mode:'cors',
       headers:{
-        'Access-Control-Allow-Origin':'http://localhost:3000',
+        'Access-Control-Allow-Origin':LOCALHOST_CORS,
         'Content-Type': 'application/json;charset=utf-8'
       }
     })

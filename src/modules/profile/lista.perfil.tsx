@@ -12,7 +12,7 @@ const listarPerfis = ({perfis}:any) => {
   
     return (
         <List>
-            {perfis? (perfis.map((value:any) => (
+            {(perfis && perfis.length > 0)? (perfis.map((value:any) => (
                 <ListItem key={value.id} button>
                     <ListItemText primary={value.nome} />
                 </ListItem>

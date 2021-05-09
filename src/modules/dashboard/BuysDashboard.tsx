@@ -81,7 +81,7 @@ export function BuysDashboard(){
       setPlaces(result);
     })
     listAllProfiles(getLoggedUser().id).then((result:any) => {
-      //console.log(result)
+      console.log(result)
       setProfiles(result);
     })
   },[]);
@@ -142,7 +142,7 @@ export function BuysDashboard(){
                   >
                    
 
-                    {profiles? (profiles.map((row:any) => (
+                    {(profiles && profiles.length > 0 )?  (profiles.map((row:any) => (
                       <option  key={row.id} value={row.id}>{row.nome}</option>
                       )))
                       : <></>}

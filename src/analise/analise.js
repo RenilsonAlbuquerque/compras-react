@@ -27,7 +27,7 @@ export function searchChartData(profileIndex) {
 
 
 export function checkStatus(response) {
-  console.log(response)
+  console.log(response.body)
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
