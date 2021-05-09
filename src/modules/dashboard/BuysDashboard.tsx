@@ -19,6 +19,8 @@ import DateFnsUtils from '@date-io/date-fns';
 import { listAllPlaces } from '../../analise/place.service';
 import { listAllProfiles } from '../../analise/profile.service';
 import { getLoggedUser } from '../../infra/auth';
+import { ChartSearchDto } from '../../dto/graph/chart.search.dto';
+import { ProfileDetailDto } from '../../dto/profile/profile.detail';
 
 
 const drawerWidth = 240;
@@ -47,7 +49,14 @@ export function BuysDashboard(){
     //=============Chart properties==================
   let [chartData, setChartData] = React.useState({} as AnalisisChart);
   let handleSearchChange = (month:number) => {
-    searchChartData(month).then((result:any) => {
+    
+    let filterDto = {
+      profileId: selectedProfile.id,
+      month:selectedDate.getMonth() + 1,
+      year:selectedDate.getFullYear()
+    } as ChartSearchDto
+
+    searchChartData(filterDto).then((result:any) => {
       setChartData(result);
     });
   }
@@ -73,15 +82,23 @@ export function BuysDashboard(){
       [name]: event.target.value,
     });
   };
+  //=====================Profile Properties==============//
+  const [selectedProfile, setSelectedProfile] = React.useState({} as ProfileDetailDto);
+
   //======================Call only once==================///
   useEffect(() => {
   
     listAllPlaces().then((result:any) => {
       //console.log(result)
       setPlaces(result);
+      
+      
     })
     listAllProfiles(getLoggedUser().id).then((result:any) => {
       setProfiles(result);
+      if(result.length > 0){
+        setSelectedProfile(result[0])
+      }
     })
   },[]);
 

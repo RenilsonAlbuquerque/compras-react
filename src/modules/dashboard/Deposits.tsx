@@ -14,17 +14,17 @@ const resultsResume = ({props}: any) => {
     <React.Fragment>
       <Title>Valor Total</Title>
       <Typography component="p" variant="h5">
-        R$ {props? props.total: "0.00"}
+        R$ {(props && props.total)? props.total: "0.00"}
       </Typography>
       <br></br>
       <Title>Valor ICMS</Title>
       <Typography component="p" variant="h5">
-        R$ {props? props.taxation_icms: "0.00"}
+        R$ {(props && props.taxation_icms)? props.taxation_icms: "0.00"}
       </Typography>
       <br></br>
       <Title>Total sem imposto</Title>
       <Typography component="p" variant="h5">
-        R$ {props? props.total_product: "0.00"}
+        R$ {(props && props.total_product)? props.total_product: "0.00"}
       </Typography>
       
       

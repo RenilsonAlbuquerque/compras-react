@@ -10,14 +10,17 @@ import { API_URL, LOCALHOST_CORS} from '../infra/constants'
 
 
 
-export function searchChartData(profileIndex) {
-  return fetch(`${API_URL}grafico/${profileIndex}`, {
+export function searchChartData(filterdto) {
+  return fetch(`${API_URL}grafico`, {
+    method: 'POST',
     accept: "application/json",
     mode:'cors',
     headers:{
       'Access-Control-Allow-Origin':LOCALHOST_CORS,
       'Content-Type': 'application/json;charset=utf-8'
-    }
+    },
+    body:JSON.stringify(filterdto)
+    
   })
     //.then(checkStatus)
     .then(parseJSON)
