@@ -43,10 +43,10 @@ const useStyles = makeStyles((theme) => ({
 
 
 export function BuysDashboard(){
-    const classes = useStyles();
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const classes = useStyles();
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-    //=============Chart properties==================
+  //=============Chart properties==================
   let [chartData, setChartData] = React.useState({} as AnalisisChart);
   let handleSearchChange = (month:number) => {
     
@@ -89,10 +89,9 @@ export function BuysDashboard(){
   useEffect(() => {
   
     listAllPlaces().then((result:any) => {
-      //console.log(result)
+   
       setPlaces(result);
-      
-      
+         
     })
     listAllProfiles(getLoggedUser().id).then((result:any) => {
       setProfiles(result);

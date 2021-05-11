@@ -30,7 +30,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Perfis" />
     </ListItem>
-    <ListItem button >
+    <ListItem button component={Link} to="/product">
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>

@@ -21,9 +21,7 @@ const CadastrarPerfil = ({users,handleCloseAction}:any) => {
     };
     const handleSave = () => {
       if(nomePerfil.length > 0 && participantes.length > 0){
-        console.log(nomePerfil)
-      
-        console.log(listUsersId(participantes));
+        
         let profileCreateDto = {
           id:0,
           nome: nomePerfil,
@@ -31,7 +29,6 @@ const CadastrarPerfil = ({users,handleCloseAction}:any) => {
         } as ProfileCreateDto;
       
         saveNewProfile(profileCreateDto).then(result => {
-          console.log(result)
           handleCloseAction();
         })
       }else{
