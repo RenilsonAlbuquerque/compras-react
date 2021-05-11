@@ -22,13 +22,17 @@ const useStyles = makeStyles({
     pos: {
       marginBottom: 12,
     },
+    cardLastPrice:{
+        borderLeft:'5px solid green'
+    }
   });
 const ProductResumes = ({props}: any) => {
     const classes = useStyles();
+    let colorLastBuyDifference = (props.lastBuyDifference > 0) ? 'red': '#3f51b5'
     return (
         <div className="row">
             <div className="col-sm-12 col-lg-4">
-                <Card className={classes.root} variant="outlined" >
+                <Card className={classes.root} variant="outlined" style={{borderLeft:'5px solid green'}} >
                     <CardContent >
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
                             Valor da última compra
@@ -54,8 +58,8 @@ const ProductResumes = ({props}: any) => {
                 </Card>
             </div>
             <div className="col-sm-12 col-lg-4">
-                <Card className={classes.root} variant="outlined">
-                    <CardContent>
+                <Card className={classes.root} style={{borderLeft:'5px solid ' + colorLastBuyDifference }} variant="outlined">
+                    <CardContent style={{color:colorLastBuyDifference}}>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
                             Diferença da ultima compra
                         </Typography>
