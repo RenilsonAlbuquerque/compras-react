@@ -1,5 +1,6 @@
 export interface ProductSearchDTO{
     id:number,
     name:string,
-    ncm:string
+    ncm:string,
+    codigo:string
 }

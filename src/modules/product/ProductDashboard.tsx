@@ -44,7 +44,7 @@ export function ProductDashboard(){
 
     const handleChangeProduct = (product:any) => {
       if(product && product.ncm){
-        let filterSearchDto = { profileId:selectedProfile.id, productNcm:product.ncm } as ProductAnalisisSearchDto
+        let filterSearchDto = { profileId:selectedProfile.id, productNcm:product.ncm,productCode:product.codigo } as ProductAnalisisSearchDto
         setSelectedProduct(product)
         getProductAnalisis(filterSearchDto).then((analisisResult:ProductAnalisisDto) =>{
           setProductAnalisis(analisisResult)

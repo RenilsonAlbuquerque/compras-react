@@ -1,4 +1,5 @@
 export interface ProductAnalisisSearchDto{
     profileId:number,
-    productNcm:string
+    productNcm:string,
+    productCode:string
 }
