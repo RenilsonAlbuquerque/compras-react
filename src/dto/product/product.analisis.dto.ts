@@ -4,5 +4,7 @@ export interface ProductAnalisisDto{
     lastBuyValue:number,
     unityMeanValue:number,
     lastBuyDifference:number,
-    productTimeLine:ProductChartTimelineDto[]
+    lastBuyTaxationDifference:number,
+    productTimeLine:ProductChartTimelineDto[],
+    
 }

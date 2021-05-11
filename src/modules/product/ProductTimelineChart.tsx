@@ -38,6 +38,7 @@ const productTimelineChart = ({props}: any) => {
           </YAxis>
           <Tooltip />
           <Area type="monotone" dataKey="value" label="valor" stroke="#8884d8" fill="#8884d8" dot={true}  />
+          <Area type="monotone" dataKey="taxation" label="imposto" stroke="red"  fill="red" dot={true}  />
         </AreaChart>
       </ResponsiveContainer>
     </React.Fragment>

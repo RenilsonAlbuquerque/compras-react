@@ -1,4 +1,5 @@
 export interface ProductChartTimelineDto{
     buyData:string,
-    value:number
+    value:number,
+    taxation:number
 }

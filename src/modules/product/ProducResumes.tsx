@@ -27,15 +27,17 @@ const useStyles = makeStyles({
     }
   });
 const ProductResumes = ({props}: any) => {
+    console.log(props)
     const classes = useStyles();
     let colorLastBuyDifference = (props.lastBuyDifference > 0) ? 'red': '#3f51b5'
+    let colorLasTaxDifference = (props.lastBuyTaxationDifference > 0) ? 'red': '#3f51b5'
     return (
         <div className="row">
-            <div className="col-sm-12 col-lg-4">
+            <div className="col-sm-12 col-lg-3">
                 <Card className={classes.root} variant="outlined" style={{borderLeft:'5px solid green'}} >
                     <CardContent >
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
-                            Valor da última compra
+                            Valor total da última compra
                         </Typography>
                         <Typography variant="h5" component="h2">
                             R$ {props.lastBuyValue.toFixed(2)}
@@ -44,7 +46,7 @@ const ProductResumes = ({props}: any) => {
                     </CardContent>
                 </Card>
             </div>
-            <div className="col-sm-12 col-lg-4">
+            <div className="col-sm-12 col-lg-3">
                 <Card className={classes.root} variant="outlined">
                     <CardContent>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -57,14 +59,26 @@ const ProductResumes = ({props}: any) => {
                     </CardContent>
                 </Card>
             </div>
-            <div className="col-sm-12 col-lg-4">
+            <div className="col-sm-12 col-lg-3">
                 <Card className={classes.root} style={{borderLeft:'5px solid ' + colorLastBuyDifference }} variant="outlined">
                     <CardContent style={{color:colorLastBuyDifference}}>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
-                            Diferença da ultima compra
+                            Diferença total da ultima compra
                         </Typography>
                         <Typography variant="h5" component="h2">
                             R$ {props.lastBuyDifference.toFixed(2)}
+                        </Typography>
+                    </CardContent>
+                </Card>
+            </div>
+            <div className="col-sm-12 col-lg-3">
+                <Card className={classes.root} style={{borderLeft:'5px solid ' + colorLasTaxDifference }} variant="outlined">
+                    <CardContent style={{color:colorLasTaxDifference}}>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            Diferença de imposto
+                        </Typography>
+                        <Typography variant="h5" component="h2">
+                            R$ {(props.lastBuyTaxationDifference)? props.lastBuyTaxationDifference.toFixed(2): 0}
                         </Typography>
                     </CardContent>
                 </Card>
