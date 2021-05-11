@@ -10,9 +10,11 @@ import { Autocomplete } from '@material-ui/lab';
 import { ProductSearchDTO } from '../../dto/product/product.search.dto';
 import ProductResumes from './ProducResumes';
 import ProductTimelineChart from './ProductTimelineChart';
+import ProductHistoricTable from './ProductHistoricTable';
 import { getProductAnalisis, listAllProductsOfProfile } from '../../analise/product.service';
 import { ProductAnalisisSearchDto } from '../../dto/product/product.analisis.search.to';
 import { ProductAnalisisDto } from '../../dto/product/product.analisis.dto';
+import ProductMarketCard from './ProductMarketCard';
 
 const useStyles = makeStyles((theme) => ({
     
@@ -122,14 +124,21 @@ export function ProductDashboard(){
           </Paper>
           {(selectedProduct && selectedProduct.id > 0) ? (
             <Grid container spacing={3}>
-            <Grid item xs={12} >
-              <ProductResumes props={productAnalsis}></ProductResumes>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <ProductTimelineChart props={productAnalsis.productTimeLine}></ProductTimelineChart>
-              </Paper>
-            </Grid>
+              <Grid item xs={12} >
+                <ProductResumes props={productAnalsis}></ProductResumes>
+              </Grid>
+              <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                  <ProductTimelineChart props={productAnalsis.productTimeLine}></ProductTimelineChart>
+                </Paper>
+              </Grid>
+              <Grid item spacing={3} sm={12} lg={8}>
+                <ProductHistoricTable props={productAnalsis.productTimeLine}></ProductHistoricTable>    
+              </Grid>
+              <Grid item spacing={3} sm={12} lg={4}>
+                <ProductMarketCard ></ProductMarketCard>
+              </Grid>
+
           </Grid>
           ):(<></>)}
           

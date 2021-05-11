@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles({
     root: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     }
   });
 const ProductResumes = ({props}: any) => {
-    console.log(props)
+
     const classes = useStyles();
     let colorLastBuyDifference = (props.lastBuyDifference > 0) ? 'red': '#3f51b5'
     let colorLasTaxDifference = (props.lastBuyTaxationDifference > 0) ? 'red': '#3f51b5'
