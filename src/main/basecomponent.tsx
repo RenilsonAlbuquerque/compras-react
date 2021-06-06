@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   appBarShift: {
+    zIndex:99,
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -68,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   drawerPaper: {
+    zIndex:99,
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
@@ -77,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   drawerPaperClose: {
+    zIndex:99,
     overflowX: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,

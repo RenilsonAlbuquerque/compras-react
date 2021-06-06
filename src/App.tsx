@@ -9,6 +9,7 @@ import {
   Redirect
 } from "react-router-dom";
 import { PrivateRoute,ProvideAuth } from './router/CustomRouter';
+import BaseSpinner from './main/spinner';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <div className="App">
+      <BaseSpinner></BaseSpinner>
       <ProvideAuth>
         <Router>
           <Switch>

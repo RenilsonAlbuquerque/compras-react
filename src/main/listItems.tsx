@@ -34,7 +34,13 @@ export const mainListItems = (
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="Compras" />
+      <ListItemText primary="Produtos" />
+    </ListItem>
+    <ListItem button component={Link} to="/buys">
+      <ListItemIcon>
+        <ShoppingCartIcon />
+      </ListItemIcon>
+      <ListItemText primary="Registrar compra" />
     </ListItem>
 {/*     
     <ListItem button>

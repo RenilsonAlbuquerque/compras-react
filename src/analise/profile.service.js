@@ -1,8 +1,10 @@
 import {checkStatus,parseJSON} from './analise'
 import { API_URL, LOCALHOST_CORS } from "../infra/constants";
+import singletonInstance from '../context/main/singleton.spinner';
 //import { ProfileCreateDto } from '../dto/profile/profile.create')
 
 export function saveNewProfile(createDto) {
+  singletonInstance.setSpinnerState(true);
     return fetch(`${API_URL}perfil`, {
         method: 'POST',
       accept: "application/json",
@@ -18,6 +20,7 @@ export function saveNewProfile(createDto) {
 }
 
 export function listAllProfiles(userId) {
+  singletonInstance.setSpinnerState(true);
     return fetch(`${API_URL}perfil/usuario/${userId}`, {
       accept: "application/json",
       mode:'cors',

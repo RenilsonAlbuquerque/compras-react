@@ -1,7 +1,9 @@
 import {checkStatus,parseJSON} from './analise'
 import { API_URL, LOCALHOST_CORS } from "../infra/constants";
+import singletonInstance from '../context/main/singleton.spinner';
 
 export function listAllUsers() {
+  singletonInstance.setSpinnerState(true);
     return fetch(`${API_URL}usuario/listar`, {
       accept: "application/json",
       mode:'cors',
@@ -15,7 +17,7 @@ export function listAllUsers() {
   }
 
   export function handleLoginApi(userLoginDto) {
-    console.log(userLoginDto)
+    singletonInstance.setSpinnerState(true);
     return fetch(`${API_URL}login`, {
       method: 'POST',
       accept: "application/json",

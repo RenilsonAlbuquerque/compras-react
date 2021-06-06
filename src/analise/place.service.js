@@ -1,8 +1,10 @@
 import {checkStatus,parseJSON} from './analise'
 import { API_URL, LOCALHOST_CORS } from "../infra/constants";
+import  singletonInstance  from '../context/main/singleton.spinner';
 
 
 export function listAllPlaces() {
+  singletonInstance.setSpinnerState(true);
     return fetch(`${API_URL}place/all`, {
       accept: "application/json",
       mode:'cors',
@@ -11,6 +13,7 @@ export function listAllPlaces() {
         'Content-Type': 'application/json;charset=utf-8'
       }
     })
+    //.then((e) => singletonInstance.setSpinnerState(false))
       //.then(checkStatus)
       .then(parseJSON)
       //.then(cb);

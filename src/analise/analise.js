@@ -1,4 +1,6 @@
 //import axios from 'axios';
+import singletonInstance from '../context/main/singleton.spinner';
+import { reducer } from '../context/main/spinner.redux';
 import { API_URL, LOCALHOST_CORS} from '../infra/constants'
 
 // export function search(query) {
@@ -11,6 +13,8 @@ import { API_URL, LOCALHOST_CORS} from '../infra/constants'
 
 
 export function searchChartData(filterdto) {
+  singletonInstance.setSpinnerState(true);
+  // const [state, dispatch] = React.useReducer(reducer, initialState)
   return fetch(`${API_URL}grafico`, {
     method: 'POST',
     accept: "application/json",
@@ -22,6 +26,7 @@ export function searchChartData(filterdto) {
     body:JSON.stringify(filterdto)
     
   })
+    //.then((e) => singletonInstance.setSpinnerState(false))
     //.then(checkStatus)
     .then(parseJSON)
     //.then(cb);
@@ -30,18 +35,16 @@ export function searchChartData(filterdto) {
 
 
 export function checkStatus(response) {
-  
+  singletonInstance.setSpinnerState(false);
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
   const error = new Error(`HTTP Error ${response.statusText}`);
   error.status = response.statusText;
   error.response = response;
-  console.log(error); // eslint-disable-line no-console
   throw error;
 }
 
 export function parseJSON(response) {
-  console.log(response)
   return response.json();
 }

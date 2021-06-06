@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 
 
 import ResultsResume from './Deposits';
-import Orders from './Order';
+import Orders from './BuysList';
 import { Button, FormControl, InputLabel, Select, TextField } from '@material-ui/core';
 import { searchChartData } from '../../analise/analise';
 import { AnalisisChart } from '../../model/analisis/analisis.chart';
