@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import { Grid, Select, TextField } from '@material-ui/core';
+import { Button, ButtonGroup, Grid, Select, TextField } from '@material-ui/core';
 import { ProfileDetailDto } from '../../dto/profile/profile.detail';
 import { listAllProfiles } from '../../analise/profile.service';
 import { getLoggedUser } from '../../infra/auth';
@@ -86,7 +86,14 @@ export function ProductDashboard(){
 
     return (
         <Container maxWidth="lg" className={classes.container}>
+            
             <Paper style={{padding:'12px', marginBottom:'12px'}}> 
+            <div className="row">
+              <ButtonGroup disableElevation variant="contained" color="primary">
+                <Button color="secondary" className="col-6">Nomenclatura comum do mercosul</Button>
+                <Button className="col-6">Nome do produto</Button>
+              </ButtonGroup>
+            </div>
             <div className="row">
               <div className="col-sm-12 col-lg-6">
               <Autocomplete
