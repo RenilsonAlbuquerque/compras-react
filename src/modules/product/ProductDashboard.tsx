@@ -11,10 +11,11 @@ import { ProductSearchDTO } from '../../dto/product/product.search.dto';
 import ProductResumes from './ProducResumes';
 import ProductTimelineChart from './ProductTimelineChart';
 import ProductHistoricTable from './ProductHistoricTable';
-import { getProductAnalisis, listAllProductsOfProfile } from '../../analise/product.service';
+import { getProductAnalisis, listAllNCMs, listAllProductsOfProfile } from '../../analise/product.service';
 import { ProductAnalisisSearchDto } from '../../dto/product/product.analisis.search.to';
 import { ProductAnalisisDto } from '../../dto/product/product.analisis.dto';
 import ProductMarketCard from './ProductMarketCard';
+import { NCMDto } from '../../dto/ncm/ncm.dto';
 
 const useStyles = makeStyles((theme) => ({
     
@@ -36,6 +37,21 @@ const useStyles = makeStyles((theme) => ({
 export function ProductDashboard(){
   
     const classes = useStyles();
+    //============NCM=====================================//
+    const [ncms, setNcms] = React.useState([{id:0,codigo:"",nome:"nome"}] as NCMDto[]);
+    const [selectedNcm, setSelectedNcm] = React.useState({} as ProductSearchDTO);
+
+    const handleChangeNcm = (ncm:any) => {
+      if(ncm && ncm.codigo){
+        let filterSearchDto = { profileId:selectedProfile.id, productNcm:ncm.codigo } as ProductAnalisisSearchDto
+        setSelectedNcm(ncm)
+        getProductAnalisis(filterSearchDto).then((analisisResult:ProductAnalisisDto) =>{
+          console.log(analisisResult)
+          setProductAnalisis(analisisResult)
+        })
+      }
+      
+    };
     //============Product analisis Properties=============//
     const [productAnalsis, setProductAnalisis] = React.useState({lastBuyValue:0,lastBuyDifference:0,unityMeanValue:0} as ProductAnalisisDto);
 
@@ -82,19 +98,33 @@ export function ProductDashboard(){
                 })
             }
         })
+        listAllNCMs().then((ncmsResult:NCMDto[]) => {
+          setNcms(ncmsResult)
+        })
     },[]);
 
     return (
         <Container maxWidth="lg" className={classes.container}>
             
             <Paper style={{padding:'12px', marginBottom:'12px'}}> 
-            <div className="row">
+            {/* <div className="row">
               <ButtonGroup disableElevation variant="contained" color="primary">
                 <Button color="secondary" className="col-6">Nomenclatura comum do mercosul</Button>
                 <Button className="col-6">Nome do produto</Button>
               </ButtonGroup>
-            </div>
+            </div> */}
             <div className="row">
+            <div className="col-sm-12 col-lg-6">
+              <Autocomplete
+                id="ncm-select"
+                style={{width:'100%'}}
+                options={ncms}
+                getOptionLabel={(ncm) => ncm.nome}
+                onChange={(event, value) => handleChangeNcm(value)} 
+                renderInput={(params) => <TextField {...params} label="NCM" variant="outlined" />}
+                />
+               
+              </div>
               <div className="col-sm-12 col-lg-6">
               <Autocomplete
                 id="product-select"
@@ -129,7 +159,7 @@ export function ProductDashboard(){
               </Button> */}
             </div>
           </Paper>
-          {(selectedProduct && selectedProduct.id > 0) ? (
+          {((selectedProduct && selectedProduct.id > 0) || (selectedNcm && selectedNcm.id) ) ? (
             <Grid container spacing={3}>
               <Grid item xs={12} >
                 <ProductResumes props={productAnalsis}></ProductResumes>

@@ -17,6 +17,20 @@ export function listAllProductsOfProfile(profileId) {
       .then(parseJSON)
       //.then(cb);
   }
+  export function listAllNCMs() {
+    singletonInstance.setSpinnerState(true);
+      return fetch(`${API_URL}product/ncms`, {
+        accept: "application/json",
+        mode:'cors',
+        headers:{
+          'Access-Control-Allow-Origin':LOCALHOST_CORS,
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      })
+        //.then(checkStatus)
+        .then(parseJSON)
+        //.then(cb);
+    }
 
   export function getProductAnalisis(filterAnalsisDto) {
     singletonInstance.setSpinnerState(true);
@@ -35,3 +49,4 @@ export function listAllProductsOfProfile(profileId) {
       .then(parseJSON)
       //.then(cb);
   }
+  
