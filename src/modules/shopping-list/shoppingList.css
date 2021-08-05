@@ -1,0 +1,8 @@
+.fixedButton{
+    position:fixed !important;
+    right:1vw;
+    bottom:1vh;
+}
+.cartHeader{
+    padding:1em;
+}

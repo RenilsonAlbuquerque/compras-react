@@ -4,6 +4,8 @@ import {BuysDashboard} from '../src/modules/dashboard/BuysDashboard'
 import {Profile} from '../src/modules/profile/profile'
 import { ManageBuys } from "./modules/Buy/ManageBuys";
 import { ProductDashboard } from "./modules/product/ProductDashboard";
+//import ShoppingList from "./modules/shopping-list/ShoppingList";
+import { ShoppingList } from "./modules/shopping-list/ShoppingList";
 
 function Routes() {
     return (
@@ -13,6 +15,7 @@ function Routes() {
                 <Route path="/profile" component={Profile}/>
                 <Route path="/product" component={ProductDashboard}/>
                 <Route path="/buys" component={ManageBuys}/>
+                <Route path="/shopping-list" component={ShoppingList}/>
                 {/* <Route component={NotFound}/> */}
             </Switch>
        

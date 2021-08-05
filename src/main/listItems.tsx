@@ -6,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import ListAltIcon from '@material-ui/icons/ListAlt';
 import PeopleIcon from '@material-ui/icons/People';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import {
@@ -41,6 +42,12 @@ export const mainListItems = (
         <ShoppingCartIcon />
       </ListItemIcon>
       <ListItemText primary="Registrar compra" />
+    </ListItem>
+    <ListItem button component={Link} to="/shopping-list">
+      <ListItemIcon>
+        <ListAltIcon />
+      </ListItemIcon>
+      <ListItemText primary="Lista de compras" />
     </ListItem>
 {/*     
     <ListItem button>
