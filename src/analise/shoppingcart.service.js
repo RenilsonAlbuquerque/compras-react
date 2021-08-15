@@ -18,6 +18,20 @@ export function saveShoppingCart(shoppingCart,profileId) {
     .then(checkStatus)
     //.then(parseJSON)
 }
+export function clearShoppingCart(profileId) {
+  singletonInstance.setSpinnerState(true);
+    return fetch(`${API_URL}cart/${profileId}`, {
+        method: 'DELETE',
+      accept: "application/json",
+      mode:'cors',
+      headers:{
+        'Access-Control-Allow-Origin':LOCALHOST_CORS,
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+    })
+    .then(checkStatus)
+    //.then(parseJSON)
+}
 
 export function getCartById(userId) {
   singletonInstance.setSpinnerState(true);

@@ -4,7 +4,7 @@ import { DeleteSweep } from "@material-ui/icons";
 import AddIcon from '@material-ui/icons/Add';
 import React, { useEffect } from "react";
 import { listAllProfiles } from "../../analise/profile.service";
-import { getCartById, saveShoppingCart } from "../../analise/shoppingcart.service";
+import { clearShoppingCart, getCartById, saveShoppingCart } from "../../analise/shoppingcart.service";
 import { ProductShoppingListDTO } from "../../dto/product/product.shopping.list";
 import { ProfileDetailDto } from "../../dto/profile/profile.detail";
 import { getLoggedUser } from "../../infra/auth";
@@ -36,6 +36,7 @@ export class ShoppingList extends React.Component<any,ShopingListState>{
                 this.setState({...this.state,profiles:result,selectedProfile:result[0]})
                 getCartById(this.state.selectedProfile.id)
                     .then(cartResult => {
+                        console.log(cartResult);
                         this.setState({...this.state,products:cartResult})
                     })
             }
@@ -46,7 +47,12 @@ export class ShoppingList extends React.Component<any,ShopingListState>{
         this.handleSave();
     }
     handleClearList(){
-        this.setState({products:[],open:false})
+        clearShoppingCart(this.state.selectedProfile.id)
+        .then(resultado => {
+            this.setState({products:[],open:false})
+            //console.log(resultado)
+        })
+        
     }
     handleClickOpen() {
         this.setState({...this.state,open:true})
