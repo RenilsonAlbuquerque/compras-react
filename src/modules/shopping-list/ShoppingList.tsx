@@ -1,4 +1,4 @@
-import { Card, CardContent, Checkbox, Typography, Dialog, makeStyles, Button, InputLabel, Select } from "@material-ui/core";
+import { Card, CardContent, Checkbox, Typography, Dialog, makeStyles, Button, InputLabel, Select, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@material-ui/core";
 import Fab from '@material-ui/core/Fab';
 import { DeleteSweep } from "@material-ui/icons";
 import AddIcon from '@material-ui/icons/Add';
@@ -8,6 +8,7 @@ import { clearShoppingCart, getCartById, saveShoppingCart } from "../../analise/
 import { ProductShoppingListDTO } from "../../dto/product/product.shopping.list";
 import { ProfileDetailDto } from "../../dto/profile/profile.detail";
 import { getLoggedUser } from "../../infra/auth";
+import { ConfirmDialog } from "../commons/modal/ConfirmDialog";
 import AddShoppingListItem from "./AddShoppingListItem";
 import './shoppingList.css';
 
@@ -16,7 +17,8 @@ interface ShopingListState{
     products:ProductShoppingListDTO[], 
     open: boolean,
     selectedProfile:ProfileDetailDto,
-    profiles:ProfileDetailDto[]
+    profiles:ProfileDetailDto[],
+    confirmDeleteDialog :boolean
 }
 
 export class ShoppingList extends React.Component<any,ShopingListState>{
@@ -27,7 +29,8 @@ export class ShoppingList extends React.Component<any,ShopingListState>{
             products:[],
             open:false,
             profiles:[],
-            selectedProfile:{} as ProfileDetailDto
+            selectedProfile:{} as ProfileDetailDto,
+            confirmDeleteDialog : false
         }
     }
     componentWillMount(){
@@ -47,6 +50,7 @@ export class ShoppingList extends React.Component<any,ShopingListState>{
         this.handleSave();
     }
     handleClearList(){
+        
         clearShoppingCart(this.state.selectedProfile.id)
         .then(resultado => {
             this.setState({products:[],open:false})
@@ -60,6 +64,17 @@ export class ShoppingList extends React.Component<any,ShopingListState>{
     handleClose = () => {
         this.setState({...this.state,open:false})
     };
+    handleOpenClearListConfirmationDialog = () =>{
+        this.setState({...this.state,confirmDeleteDialog:true})
+    }
+    handleCloseClearListConfirmationDialog = () => {
+        this.setState({...this.state,confirmDeleteDialog:false})
+    };
+    handleClearListAndCloseConfirmationDialog = () =>{
+        this.handleClearList();
+        this.handleCloseClearListConfirmationDialog();
+
+    }
     handleChange(event:any,index:number){
         this.state.products[index].bought = !this.state.products[index].bought;
         this.setState({...this.state,products:this.state.products})               
@@ -74,6 +89,7 @@ export class ShoppingList extends React.Component<any,ShopingListState>{
             //console.log(resultado)
         })
     }
+    
     render(){
         return(
             <React.Fragment>
@@ -94,7 +110,7 @@ export class ShoppingList extends React.Component<any,ShopingListState>{
                         </Select>
                     </div>
                     <div className="col-sm-12 col-lg-4">
-                        <Button variant="outlined" onClick={() => this.handleClearList()}>
+                        <Button variant="outlined" onClick={() => this.handleOpenClearListConfirmationDialog()}>
                             <DeleteSweep/>
                             Limpar a lista
                         </Button>
@@ -135,6 +151,22 @@ export class ShoppingList extends React.Component<any,ShopingListState>{
                 <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                         <AddShoppingListItem handleCloseAction={this.handleClose} products={this.state.products} handleAddItem={this.handleAddItem}></AddShoppingListItem>
                 </Dialog>
+                <Dialog open={this.state.confirmDeleteDialog} onClose={this.handleCloseClearListConfirmationDialog} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="alert-dialog-title">
+                        {"Deletar"}
+                    </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                            Tem certeza que deseja deletar toda a lista?
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleCloseClearListConfirmationDialog}>Disagree</Button>
+                            <Button onClick={this.handleClearListAndCloseConfirmationDialog} autoFocus>
+                            Agree
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
             </React.Fragment>
             
         )
