@@ -1,71 +1,167 @@
 import React from 'react';
-//import {BrowserRouter, Route, Switch, Link} from "react-router-dom";
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import ListAltIcon from '@material-ui/icons/ListAlt';
-import PeopleIcon from '@material-ui/icons/People';
+
+//import DashboardIcon from '@material-ui/icons/Dashboard';
+// import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+// import ListAltIcon from '@material-ui/icons/ListAlt';
+// import PeopleIcon from '@material-ui/icons/People';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import Icon from '@material-ui/core/Icon'
+import {BrowserRouter as Router,Link} from "react-router-dom";
+import { Button} from '@material-ui/core';
+import { ExpandLess, ExpandMore } from '@material-ui/icons';
 
-export const mainListItems = (
-  <div>
-    <ListItem button component={Link} to="/">
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItem>
-    <ListItem button component={Link} to="/profile">
-      {/* <Link to='/profile'></Link> */}
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Perfis" />
-    </ListItem>
-    <ListItem button component={Link} to="/product">
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Produtos" />
-    </ListItem>
-    <ListItem button component={Link} to="/buys">
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Registrar compra" />
-    </ListItem>
-    <ListItem button component={Link} to="/shopping-list">
-      <ListItemIcon>
-        <ListAltIcon />
-      </ListItemIcon>
-      <ListItemText primary="Lista de compras" />
-    </ListItem>
-{/*     
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItem>
-    <ListItem button>
-      
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItem> */}
+import ListSubheader from '@mui/material/ListSubheader';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
 
-  </div>  
-);
+
+const sideBarItens = [
+  {
+    id: 1,
+    title: "Dashboard",
+    icon: "dashboard",
+    path:"/",
+   
+  },
+  {
+    id: 2,
+    title: "Perfis",
+    icon: "people",
+    path:"/profile"
+  },
+  {
+    id: 3,
+    title: "Produtos",
+    icon: "shopping-cart",
+    path:"/product",
+    child:[
+      {
+        id: 4,
+        title: "Produtos consumo",
+        icon: "shopping-cart",
+        path:"/product",
+      }
+    ]
+  },
+  {
+    id: 5,
+    title: "Registrar compra",
+    icon: "shoppingCart",
+    path:"/buys"
+  },
+  {
+    id: 6,
+    title: "Lista de compras",
+    icon: "listAlt",
+    path:"/shopping-list"
+  }
+]
+
+const createItensListStateController = () => {
+  let result: any[] = [];
+  sideBarItens.forEach(item =>{
+    result.push(false);
+  })
+  return result;
+}
+
+
+export function MainListItems () {
+  const [submenuState, setSubmenuState] = React.useState(createItensListStateController());
+  const handleClickDropMenu = (itemIndex: number) => {
+    let temporary = [...submenuState]; 
+    temporary[itemIndex] = !temporary[itemIndex];
+    setSubmenuState(temporary);
+  }
+  
+  return (
+    <div>
+      {sideBarItens.map((item,index) => (
+      <>
+        {(item.child && item.child?.length > 0) ? (
+           <List>
+            <ListItemButton onClick={() => handleClickDropMenu(index)} >
+             <ListItemIcon>
+               <Icon>{item.icon}</Icon>
+             </ListItemIcon>
+             <ListItemText primary={item.title} />
+             {submenuState[index] ? ( <ExpandLess />) : (<ExpandMore />)}
+            </ListItemButton>
+            <Collapse in={submenuState[index]} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                {item.child.map((subItem,subIndex) => (
+                  <ListItem button component={Link} to={subItem.path}>
+                    <ListItemIcon>
+                      <Icon>{subItem.icon}</Icon>
+                    </ListItemIcon>
+                    <ListItemText primary={subItem.title}  />
+                  </ListItem>
+                ))}
+              </List>
+            </Collapse>
+         </List>
+         
+        ):(
+       
+          <ListItem button component={Link} to={item.path}>
+          <ListItemIcon>
+            <Icon>{item.icon}</Icon>
+          </ListItemIcon>
+          <ListItemText primary={item.title} />
+        </ListItem>
+        
+      )}</>
+
+    ))}
+  </div> 
+  )
+}
+
+// export const mainListItems = (
+//   <div>
+//     <ListItem button component={Link} to="/">
+//       <ListItemIcon>        
+//         <DashboardIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Dashboard" />
+//     </ListItem>
+
+//     <ListItem button component={Link} to="/profile">
+//       {/* <Link to='/profile'></Link> */}
+//       <ListItemIcon>
+//         <PeopleIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Perfis" />
+//     </ListItem>
+
+//     <ListItem button component={Link} to="/product">
+//       <ListItemIcon>
+//         <ShoppingCartIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Produtos" />
+//     </ListItem>
+
+//     <ListItem button component={Link} to="/buys">
+//       <ListItemIcon>
+//         <ShoppingCartIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Registrar compra" />
+//     </ListItem>
+
+//     <ListItem button component={Link} to="/shopping-list">
+//       <ListItemIcon>
+//         <ListAltIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Lista de compras" />
+//     </ListItem>
+
+
+//   </div>  
+// );
 
 export const secondaryListItems = (
   <div>
