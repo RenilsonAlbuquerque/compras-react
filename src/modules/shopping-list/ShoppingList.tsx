@@ -39,7 +39,6 @@ export class ShoppingList extends React.Component<any,ShopingListState>{
                 this.setState({...this.state,profiles:result,selectedProfile:result[0]})
                 getCartById(this.state.selectedProfile.id)
                     .then(cartResult => {
-                        console.log(cartResult);
                         this.setState({...this.state,products:cartResult})
                     })
             }
@@ -54,7 +53,6 @@ export class ShoppingList extends React.Component<any,ShopingListState>{
         clearShoppingCart(this.state.selectedProfile.id)
         .then(resultado => {
             this.setState({products:[],open:false})
-            //console.log(resultado)
         })
         
     }
