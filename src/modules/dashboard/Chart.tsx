@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTheme } from '@material-ui/core/styles';
-import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer ,Tooltip,CartesianGrid} from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer ,Tooltip,CartesianGrid, Area, AreaChart} from 'recharts';
 import Title from './BaseTitle';
 import { mapApiResultToMonthChart } from '../../utils/chart.helper';
 
@@ -27,7 +27,8 @@ const chart = ({props}: any) => {
      
       <Title>Valores mensais</Title>
       <ResponsiveContainer>
-        <LineChart
+        
+        <AreaChart
           data={props ? mapApiResultToMonthChart(props):[]}
           margin={{
             top: 16,
@@ -48,8 +49,9 @@ const chart = ({props}: any) => {
             </Label>
           </YAxis>
           <Tooltip />
-          <Line type="monotone" dataKey="amount" stroke='red' dot={true} />
-        </LineChart>
+          {/* <Line type="monotone" dataKey="amount" stroke='red' dot={true} /> */}
+          <Area type="monotone" dataKey="amount" stroke="#8884d8" fill="#8884d8" dot={false} />
+        </AreaChart>
       </ResponsiveContainer>
     </React.Fragment>
   );

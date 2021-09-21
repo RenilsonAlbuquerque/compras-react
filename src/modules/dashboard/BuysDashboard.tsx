@@ -21,6 +21,7 @@ import { listAllProfiles } from '../../analise/profile.service';
 import { getLoggedUser } from '../../infra/auth';
 import { ChartSearchDto } from '../../dto/graph/chart.search.dto';
 import { ProfileDetailDto } from '../../dto/profile/profile.detail';
+import { InfoCard } from '../commons/cards/InfoCard';
 
 
 const drawerWidth = 240;
@@ -173,21 +174,32 @@ export function BuysDashboard(){
             </div>
           </Paper>
                 
+          <Grid container spacing={3}>
+            <Grid item xs={4}>
+              <InfoCard value={chartData.total?.total} title={"Valor total"} icon={"attach_money"} color={"#28a745"}></InfoCard>
+            </Grid>
+            <Grid item xs={4}>
+              <InfoCard value={chartData.total?.taxation_icms} title={"Valor ICMS"} icon={"money_off"} color={"#17a2b8"}></InfoCard>
+            </Grid> 
+            <Grid item xs={4}>
+              <InfoCard value={chartData.total?.total_product} title={"Total sem imposto"} icon={"paid"} color={"#ef4f4c"}></InfoCard>
+            </Grid> 
+          </Grid>
        
     
           <Grid container spacing={3}>
             {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
+            <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
                 <Chart props={chartData.chartList} />
               </Paper>
             </Grid>
             {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
+            {/* <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <ResultsResume props={chartData.total} />
               </Paper>
-            </Grid>
+            </Grid> */}
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>

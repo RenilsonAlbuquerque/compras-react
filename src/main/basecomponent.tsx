@@ -77,6 +77,8 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    backgroundColor:"#333",
+    color:'#e2eaec'
   },
   drawerPaperClose: {
     zIndex:99,
@@ -165,22 +167,24 @@ export default function BaseComponent() {
       </AppBar>
       <Drawer
         variant="permanent"
+        style={{backgroundColor:'#333'}}
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
         open={open}
+        
       >
-        <div className={classes.toolbarIcon}>
+        <div className={classes.toolbarIcon} >
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List >
           <MainListItems/>
         </List>
         <Divider />
-        <List>{secondaryListItems}</List>
+        {/* <List>{secondaryListItems}</List> */}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

@@ -49,16 +49,25 @@ const sideBarItens = [
   },
   {
     id: 5,
-    title: "Registrar compra",
+    title: "Compra",
     icon: "shoppingCart",
-    path:"/buys"
-  },
-  {
-    id: 6,
-    title: "Lista de compras",
-    icon: "listAlt",
-    path:"/shopping-list"
+    path:"/buys",
+    child:[
+      {
+        id: 6,
+        title: "Registrar compra",
+        icon: "shoppingCart",
+        path:"/buys"
+      },
+      {
+        id: 7,
+        title: "Lista de compras",
+        icon: "listAlt",
+        path:"/shopping-list"
+      }
+    ]
   }
+  
 ]
 
 const createItensListStateController = () => {
@@ -85,17 +94,17 @@ export function MainListItems () {
         {(item.child && item.child?.length > 0) ? (
            <List>
             <ListItemButton onClick={() => handleClickDropMenu(index)} >
-             <ListItemIcon>
+             <ListItemIcon style={{color:'white'}}>
                <Icon>{item.icon}</Icon>
              </ListItemIcon>
              <ListItemText primary={item.title} />
              {submenuState[index] ? ( <ExpandLess />) : (<ExpandMore />)}
             </ListItemButton>
             <Collapse in={submenuState[index]} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
+              <List component="div" disablePadding style={{backgroundColor:'#4f5b62'}}>
                 {item.child.map((subItem,subIndex) => (
-                  <ListItem button component={Link} to={subItem.path}>
-                    <ListItemIcon>
+                  <ListItem button component={Link} to={subItem.path} >
+                    <ListItemIcon style={{color:'white'}}>
                       <Icon>{subItem.icon}</Icon>
                     </ListItemIcon>
                     <ListItemText primary={subItem.title}  />
@@ -108,7 +117,7 @@ export function MainListItems () {
         ):(
        
           <ListItem button component={Link} to={item.path}>
-          <ListItemIcon>
+          <ListItemIcon style={{color:'white'}}>
             <Icon>{item.icon}</Icon>
           </ListItemIcon>
           <ListItemText primary={item.title} />
@@ -120,49 +129,6 @@ export function MainListItems () {
   </div> 
   )
 }
-
-// export const mainListItems = (
-//   <div>
-//     <ListItem button component={Link} to="/">
-//       <ListItemIcon>        
-//         <DashboardIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Dashboard" />
-//     </ListItem>
-
-//     <ListItem button component={Link} to="/profile">
-//       {/* <Link to='/profile'></Link> */}
-//       <ListItemIcon>
-//         <PeopleIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Perfis" />
-//     </ListItem>
-
-//     <ListItem button component={Link} to="/product">
-//       <ListItemIcon>
-//         <ShoppingCartIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Produtos" />
-//     </ListItem>
-
-//     <ListItem button component={Link} to="/buys">
-//       <ListItemIcon>
-//         <ShoppingCartIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Registrar compra" />
-//     </ListItem>
-
-//     <ListItem button component={Link} to="/shopping-list">
-//       <ListItemIcon>
-//         <ListAltIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Lista de compras" />
-//     </ListItem>
-
-
-//   </div>  
-// );
-
 export const secondaryListItems = (
   <div>
     <ListSubheader inset>Saved reports</ListSubheader>
