@@ -98,6 +98,7 @@ export function BuysDashboard(){
       setProfiles(result);
       if(result.length > 0){
         setSelectedProfile(result[0])
+        handleSearchChange(selectedDate.getMonth() +1);
       }
     })
   },[]);

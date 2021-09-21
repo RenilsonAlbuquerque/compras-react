@@ -9,8 +9,7 @@ import { mapApiResultToMonthChart } from '../../utils/chart.helper';
 const chart = ({props}: any) => {
   //const theme = useTheme();
 
-  
-  //console.log(props)
+
   let calculateTitle = () => {
     
     if(props && props.lenght > 0){

@@ -36,7 +36,7 @@ const sideBarItens = [
   {
     id: 3,
     title: "Produtos",
-    icon: "shopping-cart",
+    icon: "shopping_bag",
     path:"/product",
     child:[
       {
@@ -50,13 +50,13 @@ const sideBarItens = [
   {
     id: 5,
     title: "Compra",
-    icon: "shoppingCart",
+    icon: "local_grocery_store",
     path:"/buys",
     child:[
       {
         id: 6,
         title: "Registrar compra",
-        icon: "shoppingCart",
+        icon: "add_shopping_cart",
         path:"/buys"
       },
       {
