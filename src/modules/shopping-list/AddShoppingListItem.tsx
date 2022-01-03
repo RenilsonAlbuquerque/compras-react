@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -6,30 +6,68 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Alert } from '@material-ui/lab';
 import { ProductShoppingListDTO } from '../../dto/product/product.shopping.list';
-
+import { getProductAnalisis, listAllNCMs } from '../../analise/product.service';
+import { NCMDto } from '../../dto/ncm/ncm.dto';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { ProductShoppingListPriceDTO } from '../../dto/product/product.shopping.list.price';
+import { ProductAnalisisSearchDto } from '../../dto/product/product.analisis.search.to';
+import { ProductAnalisisDto } from '../../dto/product/product.analisis.dto';
 
 interface AddShoppingListItemState{
     nomePerfil: string,
     showError:boolean
 }
-const AddShoppingListItem = ({products,handleCloseAction,handleAddItem}:any) => {
-    const [productName,setProductName] = React.useState("");
+const AddShoppingListItem = ({profileId,products,handleCloseAction,handleAddItem}:any) => {
+    const [productName,setProductName] = React.useState({} as ProductShoppingListPriceDTO);
     const [quantity,setQuantity] = React.useState(0);
     const [showError,setShowError] = React.useState(false);
+    const [productsOptions,setProductsOptions] = React.useState([] as NCMDto[]);
    
+    useEffect(() => {
+      listAllNCMs().then((ncmsResult:NCMDto[]) => {
+        setProductsOptions(ncmsResult)
+      })
+    },[]);
+
 
     const handleClose = () => {
         handleCloseAction();
     };
+    const handleChangeProduct = (product:any) =>{
+      
+      if(product && product.codigo){
+        //search product analisis
+        let filterSearchDto = { profileId:profileId , productNcm:product.codigo } as ProductAnalisisSearchDto
+        getProductAnalisis(filterSearchDto).then((analisisResult:ProductAnalisisDto) =>{
+          setProductName(
+            {
+              id:product.id,
+              name:product.nome,
+              codigo:product.codigo,
+              previousPrice: analisisResult.lastBuyValue
+            }as ProductShoppingListPriceDTO
+          )
+        })
+        
+      }else{
+        setProductName(
+          {
+            id:-1,
+            name:product,
+            codigo:""
+          }as ProductShoppingListPriceDTO
+        )
+      }
+    }
     const handleSave = () => {
-      if(productName.length > 0){
+      if(productName.name.length > 0){
         
         let newShoppingListItem = {
             id:98,
-            name:productName,
-            codigo:"",
-            ncm:"",
-            previousPrice:0.0,
+            name:productName.name,
+            codigo:productName.codigo,
+            ncm:productName.ncm,
+            previousPrice:productName.previousPrice,
             quantity:quantity,
             bought:false,
           
@@ -42,17 +80,18 @@ const AddShoppingListItem = ({products,handleCloseAction,handleAddItem}:any) => 
       }
       
     }
+
     return (
       <div>
     
         
-          <DialogTitle id="form-dialog-title">Criar novo perfil</DialogTitle>
+          <DialogTitle id="form-dialog-title">Adicionar novo produto</DialogTitle>
           <DialogContent>
            {showError? <Alert variant="filled"  severity="error">Nome inválido ou quantidade de produtos inválida</Alert> :<></>} 
             {/* <DialogContentText>
               Crie o perfil e adicione pessoas. O nome do perfil deve ser preferencialmente algo que relacione as compras entre si.
             </DialogContentText> */}
-            <TextField
+            {/* <TextField
               autoFocus
               margin="dense"
               id="name"
@@ -61,6 +100,21 @@ const AddShoppingListItem = ({products,handleCloseAction,handleAddItem}:any) => 
               fullWidth
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
+            /> */}
+            <Autocomplete
+              disablePortal
+              id="name"
+              options={productsOptions}
+              //sx={{ width: 300 }}
+              getOptionLabel={(option) => option.nome}
+              renderInput={(params) => <TextField {...params} label="Produto" />}
+              onChange={(event, newValue) => {
+                handleChangeProduct(newValue)
+              }}
+              onInputChange={(event, newInputValue) => {
+                handleChangeProduct(newInputValue);
+              }}
+              //onChange={(e) => console.log(e)}
             />
             <div className="row">
                 <div className="col-12">

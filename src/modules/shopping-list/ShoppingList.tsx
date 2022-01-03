@@ -147,7 +147,11 @@ export class ShoppingList extends React.Component<any,ShopingListState>{
                     <AddIcon />
                 </Fab>
                 <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-                        <AddShoppingListItem handleCloseAction={this.handleClose} products={this.state.products} handleAddItem={this.handleAddItem}></AddShoppingListItem>
+                    <AddShoppingListItem
+                        profileId={this.state.selectedProfile.id} 
+                        handleCloseAction={this.handleClose} 
+                        products={this.state.products} 
+                        handleAddItem={this.handleAddItem}></AddShoppingListItem>
                 </Dialog>
                 <Dialog open={this.state.confirmDeleteDialog} onClose={this.handleCloseClearListConfirmationDialog} aria-labelledby="form-dialog-title">
                     <DialogTitle id="alert-dialog-title">
@@ -159,9 +163,9 @@ export class ShoppingList extends React.Component<any,ShopingListState>{
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.handleCloseClearListConfirmationDialog}>Disagree</Button>
+                            <Button onClick={this.handleCloseClearListConfirmationDialog}>Não</Button>
                             <Button onClick={this.handleClearListAndCloseConfirmationDialog} autoFocus>
-                            Agree
+                            Sim
                             </Button>
                         </DialogActions>
                     </Dialog>
