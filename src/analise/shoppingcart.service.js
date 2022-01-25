@@ -47,3 +47,19 @@ export function getCartById(userId) {
       .then(checkStatus)
       .then(parseJSON)
 }
+
+
+export function getCartSugestionById(userId) {
+  singletonInstance.setSpinnerState(true);
+    return fetch(`${API_URL}cart/prediction/${userId}`, {
+      method: 'GET',
+      accept: "application/json",
+      mode:'cors',
+      headers:{
+        'Access-Control-Allow-Origin':LOCALHOST_CORS,
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+    })
+      .then(checkStatus)
+      .then(parseJSON)
+}

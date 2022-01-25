@@ -13,10 +13,6 @@ import { ProductShoppingListPriceDTO } from '../../dto/product/product.shopping.
 import { ProductAnalisisSearchDto } from '../../dto/product/product.analisis.search.to';
 import { ProductAnalisisDto } from '../../dto/product/product.analisis.dto';
 
-interface AddShoppingListItemState{
-    nomePerfil: string,
-    showError:boolean
-}
 const AddShoppingListItem = ({profileId,products,handleCloseAction,handleAddItem}:any) => {
     const [productName,setProductName] = React.useState({} as ProductShoppingListPriceDTO);
     const [quantity,setQuantity] = React.useState(0);
@@ -54,7 +50,8 @@ const AddShoppingListItem = ({profileId,products,handleCloseAction,handleAddItem
           {
             id:-1,
             name:product,
-            codigo:""
+            codigo:"",
+            previousPrice: 0
           }as ProductShoppingListPriceDTO
         )
       }
@@ -88,25 +85,13 @@ const AddShoppingListItem = ({profileId,products,handleCloseAction,handleAddItem
           <DialogTitle id="form-dialog-title">Adicionar novo produto</DialogTitle>
           <DialogContent>
            {showError? <Alert variant="filled"  severity="error">Nome inválido ou quantidade de produtos inválida</Alert> :<></>} 
-            {/* <DialogContentText>
-              Crie o perfil e adicione pessoas. O nome do perfil deve ser preferencialmente algo que relacione as compras entre si.
-            </DialogContentText> */}
-            {/* <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Nome do Produto"
-              type="text"
-              fullWidth
-              value={productName}
-              onChange={(e) => setProductName(e.target.value)}
-            /> */}
             <Autocomplete
-              disablePortal
+              freeSolo
+              disableClearable
               id="name"
               options={productsOptions}
               //sx={{ width: 300 }}
-              getOptionLabel={(option) => option.nome}
+              getOptionLabel={(option) => option.nome || "hoje"}
               renderInput={(params) => <TextField {...params} label="Produto" />}
               onChange={(event, newValue) => {
                 handleChangeProduct(newValue)
@@ -114,7 +99,6 @@ const AddShoppingListItem = ({profileId,products,handleCloseAction,handleAddItem
               onInputChange={(event, newInputValue) => {
                 handleChangeProduct(newInputValue);
               }}
-              //onChange={(e) => console.log(e)}
             />
             <div className="row">
                 <div className="col-12">

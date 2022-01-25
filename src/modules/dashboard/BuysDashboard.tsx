@@ -176,13 +176,13 @@ export function BuysDashboard(){
           </Paper>
                 
           <Grid container spacing={3}>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4} >
               <InfoCard value={chartData.total?.total} title={"Valor total"} icon={"attach_money"} color={"#28a745"}></InfoCard>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <InfoCard value={chartData.total?.taxation_icms} title={"Valor ICMS"} icon={"money_off"} color={"#17a2b8"}></InfoCard>
             </Grid> 
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <InfoCard value={chartData.total?.total_product} title={"Total sem imposto"} icon={"paid"} color={"#ef4f4c"}></InfoCard>
             </Grid> 
           </Grid>
